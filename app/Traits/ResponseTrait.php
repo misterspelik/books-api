@@ -19,7 +19,7 @@ trait ResponseTrait
         return response()->json([
             'access_token' => $token,
             'token_type' => 'Bearer',
-            'expires_in' => $this->guard()->factory()->getTTL() * 60
+            'expires_in' => auth()->factory()->getTTL() * 60
         ]);
     }
 }

@@ -7,8 +7,9 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
     use HasFactory, Notifiable;
 
@@ -55,6 +56,35 @@ class User extends Authenticatable
     public function scopeReaders(Builder $query): Builder
     {
         return $query->where('role_id', Role::READER_ROLE);
+    }
+
+    /**
+     * Checks if user is admin
+     * @return bool
+     */
+    public function isAdmin(): bool
+    {
+        return $this->role_id = Role::ADMIN_ROLE;
+    }
+
+    /**
+     * Checks if user is reader
+     * @return bool
+     */
+    public function isReader(): bool
+    {
+        return $this->role_id = Role::READER_ROLE;
+    }
+
+
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+    
+    public function getJWTCustomClaims()
+    {
+        return [];
     }
 
     public function role()

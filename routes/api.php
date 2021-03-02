@@ -14,13 +14,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+/**
+ * Routes without authentication
+ */
+Route::group(['middleware'=>['guest']], function () {
+    Route::get('login', 'AuthController@login');
+    Route::post('login', 'AuthController@login')->middleware('throttle:5,1');
 });
-
 
 Route::group(['middleware'=>['auth:api']], function () {
     Route::get('logout', 'Auth\AuthController@logout');
     Route::get('refresh-token', 'Auth\AuthController@refreshToken');
-    Route::apiResource('user', 'UserController', ['only'=>['index', 'show','update']]);
+    Route::apiResource('users', 'UsersController', ['only'=>['index', 'delete']]);
 });
