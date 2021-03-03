@@ -46,6 +46,17 @@ class AuthController extends Controller
         return response()->json(['message' => 'Successfully logged out']);
     }
 
+    /**
+     * Get the authenticated User
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function me()
+    {
+        $user = $this->guard()->user();
+
+        return new UserResource($user);
+    }
 
     /**
     * Refresh a token.

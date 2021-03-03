@@ -76,7 +76,6 @@ class User extends Authenticatable implements JWTSubject
         return $this->role_id = Role::READER_ROLE;
     }
 
-
     public function getJWTIdentifier()
     {
         return $this->getKey();
@@ -94,11 +93,16 @@ class User extends Authenticatable implements JWTSubject
 
     public function lineReads()
     {
-        return $this->hasMany(LineRead::class);
+        return $this->hasMany(LinesRead::class);
     }
 
     public function timeReads()
     {
-        return $this->hasMany(TimeRead::class);
+        return $this->hasMany(TimesRead::class);
+    }
+
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
     }
 }

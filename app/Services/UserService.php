@@ -7,7 +7,6 @@ use App\Models\User;
 use Hash, DB, Log;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
-use Illuminate\Support\Collection;
 
 class UserService extends Service
 {
@@ -17,9 +16,9 @@ class UserService extends Service
      *
      * @return Collection
      */
-    public function getUsers(): Collection
+    public function getListUsers()
     {
-        return User::get();
+        return User::paginate();
     }
 
     /**
@@ -34,13 +33,16 @@ class UserService extends Service
         try {
             DB::beginTransaction();
 
+            $user->lineReads()->delete();
+            $user->timeReads()->delete();
+
             return $user->delete();
 
             DB::commit();
-        } catch (Exception $exception) {
+        } catch (Throwable $exception) {
             return $this->handleTransactionException($exception);
         }
 
-        return $user;
+        return false;
     }
 }

@@ -17,6 +17,12 @@ class CreateTransactionsTable extends Migration
             $table->id();
             $table->string('type');
             $table->integer('amount');
+            $table->unsignedBigInteger('user_id');
+
+            $table->foreign('user_id')->references('id')->on('users')
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
 
             $table->timestamps();
         });

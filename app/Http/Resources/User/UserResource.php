@@ -14,8 +14,6 @@ class UserResource extends JsonResource
      */
     public function toArray($request)
     {
-        self::withoutWrapping();
-    
         $this->load('role');
 
         return [

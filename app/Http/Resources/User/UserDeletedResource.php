@@ -14,10 +14,8 @@ class UserDeletedResource extends JsonResource
      */
     public function toArray($request)
     {
-        self::withoutWrapping();
-
         return [
-            'deeted' => true
+            'deleted' => true
         ];
     }
 }

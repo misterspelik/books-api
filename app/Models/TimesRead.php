@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class TimesRead extends Model
 {
     use HasFactory;
+
+    public function transaction()
+    {
+        return $this->belongsTo(Transaction::class);
+    }
 }

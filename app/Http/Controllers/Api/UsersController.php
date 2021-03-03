@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use Log;
 use Auth;
 use App\Models\User;
 use App\Http\Controllers\Controller;
@@ -48,10 +49,8 @@ class UsersController extends Controller
      */
     public function delete(User $user) : UserDeletedResource
     {
-        $resource = new UserDeletedResource($user);
-
         $result = $this->userService->delete($user);
 
-        return $resource;
+        return new UserDeletedResource(new User());
     }
 }

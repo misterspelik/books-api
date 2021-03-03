@@ -18,12 +18,16 @@ use Illuminate\Support\Facades\Route;
  * Routes without authentication
  */
 Route::group(['middleware'=>['guest']], function () {
-    Route::get('login', 'AuthController@login');
     Route::post('login', 'AuthController@login')->middleware('throttle:5,1');
 });
 
 Route::group(['middleware'=>['auth:api']], function () {
-    Route::get('logout', 'Auth\AuthController@logout');
-    Route::get('refresh-token', 'Auth\AuthController@refreshToken');
-    Route::apiResource('users', 'UsersController', ['only'=>['index', 'delete']]);
+    Route::get('me', 'AuthController@me');
+    Route::get('logout', 'AuthController@logout');
+    Route::get('refresh-token', 'AuthController@refreshToken');
+
+    Route::get('users', 'UsersController@index');
+    Route::delete('users/delete', 'UsersController@delete');    
+
+    Route::get('reports', 'ReportsController@index');
 });

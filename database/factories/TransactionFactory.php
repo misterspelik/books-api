@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use App\Models\Transaction;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -24,6 +25,7 @@ class TransactionFactory extends Factory
         return [
             'type' => $this->faker->word,
             'amount' => $this->faker->randomDigitNotNull,
+            'user_id' => User::all()->random()->id,
         ];
     }
 

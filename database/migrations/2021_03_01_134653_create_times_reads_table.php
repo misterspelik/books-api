@@ -19,8 +19,14 @@ class CreateTimesReadsTable extends Migration
             $table->integer('amount');
             $table->unsignedBigInteger('transaction_id');
 
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('transaction_id')->references('id')->on('transactions');
+            $table->foreign('user_id')->references('id')->on('users')
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->foreign('transaction_id')->references('id')->on('transactions')
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
 
             $table->timestamps();
         });
